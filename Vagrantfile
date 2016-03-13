@@ -17,6 +17,11 @@ box_url = "#{pmconf.base_url}/#{pmconf.box_name}-#{pmconf.platform}.box"
 
 ENV['VAGRANT_DEFAULT_PROVIDER'] = pmconf.platform
 
+Vagrant.configure("2") do |config|
+  config.vm.network "forwarded_port", guest: 5050, host: 5050
+  config.vm.synced_folder "/Users/morefree/Development/go-dev/src/github.com/more-free", "/home/vagrant/dev/go/src/github.com/morefree"
+end
+
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Create a private network, which allows host-only access to the machine
@@ -29,6 +34,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Every Vagrant virtual environment requires a box to build off of.
   config.vm.box = pmconf.box_name
+  config.vm.hostname = "vm-mesos"
 
   # There are two levels of caching here.
   # 1. If pmconf.box_local is set, then the file referenced by pmconf.box_url
@@ -79,5 +85,4 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       shell.args = arg_array.join(' ')
     end
   end
-
 end
