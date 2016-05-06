@@ -146,3 +146,14 @@ VMware Support: [Fabio Rapposelli](https://github.com/frapposelli) ([@fabiorappo
 [21]: config.json "config.json"
 [22]: packer/packer.json "packer.json"
 [23]: lib/scripts "scripts"
+
+====== some notes =====
+test dir: /Users/morefree/Development/playa-mesos
+A known issue is,  from host I could not access the VMs via ip address.  Searched but hadn't found any reason / solution.
+Also using forwarded port alone doesn't work because when registering new framework there will be a shit New master master@127.0.1.1:5050 detected error. See this known issue : https://github.com/mesosphere/playa-mesos/issues/32  The fix in the doc doesn't work for me.  The only workaround is mounting current file to VM folder and run "go run ..." within the VM.  But still cannot open the slave sandbox.
+
+put these lines to startup script :
+export PATH=$PATH:$HOME/go/bin
+export GOPATH=$HOME/dev/go
+
+goto :  cd dev/go/src/github.com/morefree/mesos_scheduler/
